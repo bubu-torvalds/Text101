@@ -6,22 +6,61 @@ public class TextController : MonoBehaviour
 {
 
 	public Text text;
+	private enum States {chavant, banc, papier, affiche, papier_chavant, shannon, bobine, momento, change_scene};
+	private States myState;
 
 	// Use this for initialization
 	void Start ()
 	{
-		text.text = "Bienvenue dans cette aventure textuelle.";
+		myState = States.chavant;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			
-			text.text = "Tu te trouves à l'arret de tram de Chavant, tu dois trouver quelque-chose, " +
-						"mais tu ne sais pas encore quoi. Il y a un banc, un morceau de papier coincé dans la vitre et une affiche.\n\n" +
-						"Appui sur B pour voir le Banc, P pour voir le Papier, A pour voir l'Affiche.";
+		print (myState);
 		
+		if (myState == States.chavant) {
+			state_chavant();
+		} else if (myState == States.banc) {
+			state_banc();
+		} else if (myState == States.affiche) {
+			state_affiche();
 		}
+	}
+	
+	void state_chavant() {
+	
+		text.text = "Tu te trouves à l'arret de tram de Chavant, tu dois trouver quelque-chose, " +
+					"mais tu ne sais pas encore quoi. Il y a un banc, un morceau de papier coincé dans la vitre et une affiche.\n\n" +
+					"Appui sur B pour voir le Banc, P pour voir le Papier, A pour voir l'Affiche.";
+					
+		if (Input.GetKeyDown (KeyCode.B)) {			
+			myState = States.banc;						
+		} else if (Input.GetKeyDown (KeyCode.A)) {
+			myState = States.affiche;
+		} else if (Input.GetKeyDown (KeyCode.P)) {
+			myState = States.papier;
+		}	
+	}
+	
+	void state_banc() {
+		
+		text.text = "C'est juste un banc d'arret de tram, il est sale et peu intéressant.\n\n" +
+					"Appui sur R pour retourner à Chavant.";
+		
+		if (Input.GetKeyDown (KeyCode.R)) {			
+			myState = States.chavant;						
+		} 			
+	}
+	
+	void state_affiche() {
+		
+		text.text = "Une affiche de François Fillon avec des cornes et #RendsLargent tagé dessus.\n\n" +
+					"Appui sur R pour retourner à Chavant.";
+		
+		if (Input.GetKeyDown (KeyCode.R)) {			
+			myState = States.chavant;						
+		} 			
 	}
 }
