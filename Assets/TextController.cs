@@ -26,7 +26,18 @@ public class TextController : MonoBehaviour
 			state_banc();
 		} else if (myState == States.affiche) {
 			state_affiche();
+		} else if (myState == States.papier) {
+			state_papier();
+		} else if (myState == States.papier_chavant) {
+			state_papier_chavant();
+		} else if (myState == States.shannon) {
+			state_shannon();
+		} else if (myState == States.bobine) {
+			states_bobine();
+		} else if (myState == States.momento) {
+			states_momento();
 		}
+		
 	}
 	
 	void state_chavant() {
@@ -63,4 +74,32 @@ public class TextController : MonoBehaviour
 			myState = States.chavant;						
 		} 			
 	}
+	
+	void state_papier() {
+		
+		text.text = "En regardant le papier, tu vois quelque chose griffonné dessus. C'est peut-etre un indice, qui sait ?\n\n" +
+					"Appui sur L pour Lire le papier, ou sur R pour retourner à Chavant.";
+		
+		if (Input.GetKeyDown (KeyCode.R)) {			
+			myState = States.chavant;						
+		} else if (Input.GetKeyDown (KeyCode.L)) {
+			myState = States.papier_chavant;
+		}			
+	}
+	
+	void state_papier_chavant() {
+		
+		text.text = "'Lieu pour un premier verre.' Voilà tout ce qui est écrit sur ce papier.\n\n" +
+					"Appui sur N pour aller vers le Nord, sur E pour aller vers l'Est ou sur O pour aller vers l'Ouest.";
+		
+		if (Input.GetKeyDown (KeyCode.N)) {			
+			myState = States.shannon;						
+		} else if (Input.GetKeyDown (KeyCode.E)) {
+			myState = States.bobine;
+		} else if (Input.GetKeyDown (KeyCode.O)) {
+			myState = States.momento;
+		}
+	
+	}
+	
 }
